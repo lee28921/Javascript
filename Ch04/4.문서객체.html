@@ -22,6 +22,7 @@
     
     <h3>4.문서객체</h3>
     
+    <h4>문서객체 선택</h4>
     <ul>
         <li id="seoul">
             <span>서울</span>
@@ -45,6 +46,8 @@
         <li>광주</li>
     </ul>
 
+    <h4>문서객체 조작</h4>
+
     <img src="" alt="">
     <img src="" alt="">
 
@@ -66,7 +69,31 @@
     <div class="box green">box2</div>
     <div class="box">box3</div>
 
-    <h4>문서객체 선택</h4>
+    <h4>문서 객체 추가/이동</h4>
+    <ul class="city">
+        <li><em>경기도</em><ol></ol></li>
+        <li><em>충청도</em><ol></ol></li>
+        <li><em>강원도</em><ol></ol></li>
+        <li>
+            <em>경상도</em>
+            <ol>
+                <li>창원</li>
+                <li>수원</li>
+                <li>목포</li>
+                <li>부여</li>
+                <li>원주</li>
+                <li>파주</li>
+            </ol>
+        </li>
+        <li><em>전라도</em><ol></ol></li>
+    </ul>
+
+    <h4>문서 객체 생성/삭제</h4>
+    <section>
+        <h5>삭제할 예정입니다.</h5>
+    </section>
+
+    <!-- 문서 객체 선택 -->
     <script> // 동적
         const h3 = document.querySelector('h3'); // h3 태그 객체를 생성
         h3.style.color = 'gray';
@@ -101,7 +128,7 @@
 
     </script>
 
-    <h4>문서객체 조작</h4>
+    <!-- 문서 객체 조작 -->
     <script>
         // 속성 조작
         const imgs = document.querySelectorAll('img');
@@ -149,5 +176,69 @@
         boxs[2].classList.toggle('blue'); // 있으면 추가, 없으면 삭제
 
     </script>
+
+    <!-- 문서 객체 추가/이동 -->
+    <script>
+        // 추가
+        const gyeonggi   = document.querySelector('.city > li:nth-child(1) > ol');
+        const chungchung = document.querySelector('.city > li:nth-child(2) > ol');
+        const gangwong   = document.querySelector('.city > li:nth-child(3) > ol');
+        const gyeongsang = document.querySelector('.city > li:nth-child(4) > ol');
+        const jeonlla    = document.querySelector('.city > li:nth-child(5) > ol');
+
+        chungchung.insertAdjacentHTML('beforeend','<li>평택</li>'); //beforeend : 추가된 시점에서 후반 추가
+        chungchung.insertAdjacentHTML('beforeend','<li>용인</li>');
+        gyeonggi.insertAdjacentHTML('afterbegin','<li>성남</li>'); //afterbegin : 추가된 시점에서 전반 추가
+        gyeonggi.insertAdjacentHTML('afterbegin','<li>화성</li>');
+
+        chungchung.insertAdjacentHTML('beforeend','<li>단양</li>');
+        gangwong.insertAdjacentHTML('beforeend','<li>춘천</li>');
+        jeonlla.insertAdjacentHTML('beforeend','<li>단양</li>');
+
+        // 이동
+        const nodes = gyeongsang.getElementsByTagName('li'); // 이동시킬 배열 생성
+        const suwon = nodes[1]; // 수원부터
+        const mokpo = nodes[2];
+        const buyeo = nodes[3];
+        const wonju = nodes[4];
+        const pajoo = nodes[5]; // 파주까지
+
+        gyeonggi.append(suwon); // 경기도 태그 안 뒤에 이동
+        gyeonggi.prepend(pajoo);// 경기도 태그 안 앞에 이동
+        jeonlla.append(mokpo);
+        chungchung.prepend(buyeo);
+        gangwong.append(wonju);
+        
+    </script>
+
+    
+    <!-- 문서 객체 생성/삭제 -->
+    <script>
+        const section = document.getElementsByTagName('section')[0]; //배열을 바로 참조
+
+        const pNode = document.createElement('p');
+        pNode.id = 'text'; // id 정의
+        pNode.innerText = '동적으로 생성한 문단태그 p 입니다.';
+        section.appendChild(pNode); // 태그 안에 텍스트 추가
+
+        const imgNode1 = document.createElement('img');
+        imgNode1.classList.add('img1'); // 태그에 클래스 정의
+        imgNode1.setAttribute('src','./images/flower1.jpg'); // 속성과 값 추가
+        imgNode1.setAttribute('alt','벚꽃');
+        section.appendChild(imgNode1);
+
+        const imgNode2 = document.createElement('img');
+        imgNode2.classList.add('img2');
+        imgNode2.setAttribute('src','./images/flower2.jpg');
+        imgNode2.setAttribute('alt','코스모스');
+        section.insertBefore(imgNode2, imgNode1); // 첫번째 이미지 앞에 생성
+
+        //삭제
+
+        const h5 = document.querySelector('h5');
+        h5.remove(); // 해당 태그 혹은 값 삭제
+
+    </script>
+
 </body>
 </html>

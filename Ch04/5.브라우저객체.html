@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.브라우저객체</title>
+</head>
+<body>
+    <h3>5.브라우저 객체 모델(BOM)</h3>
+
+    <h4>window 객체</h4>
+    <script>
+        // window 객체 - 브라우저 객체, 최상위 객체
+        console.log(window);
+
+        // 브라우저 크기 - 브라우저 크기를 조절할 때마다 F5를 누르면 값이 달라진다
+        window.document.write('innderWidth : '+window.innerWidth+'<br>'); // 브라우저 가로 폭
+        window.document.write('innderHeight : '+window.innerHeight+'<br>'); // 브라우저 세로 폭
+
+        // 새창 띄우기
+        window.open('./1.객체.html','객체예제','width=600 height=500'); // 팝업 창 띄우기(자주 사용 안함)
+        
+        // 브라우저 저장소
+        window.localStorage.setItem('name','김유신'); // 창을 닫아도 데이터가 남는다
+        window.sessionStorage.setItem('name','김춘추'); // 창을 닫으면 데이터가 사라진다
+        
+
+    </script>
+    
+    <h4>screen 객체</h4>
+    <script>
+        // screen 객체 - 브라우저 운영체제 화면 객체
+        document.write('화면 너비 : '+screen.width+'<br>'); // 디스플레이 화면 크기
+        document.write('화면 높이 : '+screen.height+'<br>');
+        document.write('화면 너비(작업표시줄 제외) : '+screen.availWidth+'<br>'); // 디스플레이 화면에서 작업표시줄 크기를 제외
+        document.write('화면 높이(작업표시줄 제외) : '+screen.availHeight+'<br>');
+
+    </script>
+    
+    <h4>navigator 객체</h4>
+    <script>
+        // navigator 객체 - 브라우저 정보 객체
+        console.log(navigator);
+
+        document.write('브라우저 코드명 : '+navigator.appCodeName+'<br>');
+        document.write('브라우저 이름 : '+navigator.appName+'<br>');
+        document.write('브라우저 버전 : '+navigator.appVersion+'<br>');
+        document.write('브라우저 플랫폼 : '+navigator.platform+'<br>');
+        document.write('브라우저 정보 : '+navigator.userAgent+'<br>'); // 접속된 기기를 볼 수 있다
+
+    </script>
+    
+    <h4>location 객체</h4> 
+    <button onclick="f1()">새로 고침</button>
+    <button onclick="f2()">네이버 이동</button>
+    <button onclick="f3()">카카오 이동</button>
+    <script>
+        // location 객체 - 브라우저 주소 객체 ☆
+        console.log(location);
+
+        // 페이지 새로고침
+        const f1 = () => location.reload();
+
+        // 페이지 이동 ☆ (주소 히스토리 기록)
+        const f2 = () => location.href = 'https://naver.com';
+
+        // 페이지 이동 (주소 히스토리 기록 불가)
+        const f3 = () => location.replace('https://daum.net');
+
+    </script>
+    
+    <h4>history 객체</h4>
+    <button onclick="back()">뒤로</button>
+    <button onclick="forward()">앞으로</button>
+    <script>
+        // history 객체 - 브라우저 주소 이력 객체
+        console.log(history);
+
+        document.write('history length : '+history.length+'<br>'); // 저장된 페이지 기록 갯수
+
+        // 저장된 페이지 기록 안에서 이동
+        const back = () => history.back();
+        const forward = () => history.forward();
+
+    </script>
+
+</body>
+</html>
