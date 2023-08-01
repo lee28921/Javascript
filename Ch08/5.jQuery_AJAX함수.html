@@ -63,7 +63,7 @@
                     success : function(data){
                         console.log(data);
                         
-                        for (let user of data.users){
+                        for (let user of data.users){ // 배열 이름이 있기에 users
                             let tr = '<tr>';
                             tr += '<td>'+user.uid+'</td>';
                             tr += '<td>'+user.name+'</td>';
