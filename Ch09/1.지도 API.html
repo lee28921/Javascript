@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.지도 API</title>
+    <!--
+        날짜: 2023/08/02
+        이름: 이지민
+        내용: 지도 API 실습하기
+    -->
+</head>
+<body>
+    <h3>1.지도 API 실습</h3>
+
+    
+        <!-- 지도를 표시할 div 입니다 -->
+
+        <h4>지도 생성하기</h4>
+        <div id="map1" style="width:800px;height:350px;"></div>
+        
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ccd77f8a6bd0cdec27a5442fa9a59d04"></script>
+    <script>
+    var mapContainer = document.getElementById('map1'), // 지도를 표시할 div 
+        mapOption = { 
+            center: new kakao.maps.LatLng(35.16944411066608, 129.1687803535305), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+    
+    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption); 
+    </script>
+
+    
+    <div id="map2" style="width:800px;height:350px;"></div>
+    <p><em>지도를 클릭해주세요!</em></p> 
+    <div id="clickLatlng"></div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ccd77f8a6bd0cdec27a5442fa9a59d04"></script>
+    <script>
+    var mapContainer = document.getElementById('map2'), // 지도를 표시할 div 
+        mapOption = { 
+            center: new kakao.maps.LatLng(35.13713010147105, 129.0990305763769), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    // 지도를 클릭한 위치에 표출할 마커입니다
+    var marker = new kakao.maps.Marker({ 
+        // 지도 중심좌표에 마커를 생성합니다 
+        position: map.getCenter() 
+    }); 
+    // 지도에 마커를 표시합니다
+    marker.setMap(map);
+
+        // 지도에 클릭 이벤트를 등록합니다
+        // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+        kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+            
+            // 클릭한 위도, 경도 정보를 가져옵니다 
+            var latlng = mouseEvent.latLng; 
+            
+            // 마커 위치를 클릭한 위치로 옮깁니다
+            marker.setPosition(latlng);
+            
+            var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+            message += '경도는 ' + latlng.getLng() + ' 입니다';
+            
+            var resultDiv = document.getElementById('clickLatlng'); 
+            resultDiv.innerHTML = message;
+            
+        });
+    </script>
+
+    <h4>해운대, 광안리, 송정해수욕장 마커 표시</h4>
+
+        
+    <div id="map3" style="width:800px;height:350px;"></div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ccd77f8a6bd0cdec27a5442fa9a59d04"></script>
+    <script>
+    var mapContainer = document.getElementById('map3'), // 지도를 표시할 div  
+        mapOption = { 
+            center: new kakao.maps.LatLng(35.17855046440367, 129.19985254935077), // 지도의 중심좌표
+            level: 9 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    
+    // 마커를 표시할 위치와 title 객체 배열입니다 
+    var positions = [
+        {
+            title: '해운대', 
+            latlng: new kakao.maps.LatLng(35.219765484316454, 129.24998369650805)
+        },
+        {
+            title: '광안리', 
+            latlng: new kakao.maps.LatLng(35.15312061040509, 129.1189829866064)
+        },
+        {
+            title: '송정', 
+            latlng: new kakao.maps.LatLng(35.17855046440367, 129.19985254935077)
+        },
+    ];
+
+    // 마커 이미지의 이미지 주소입니다
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+        
+    for (var i = 0; i < positions.length; i ++) {
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            map: map, // 마커를 표시할 지도
+            position: positions[i].latlng, // 마커를 표시할 위치
+            title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        });
+
+        marker.setMap(map);
+    }
+    
+    // 인포메세지
+    var iwContent = '<div style="padding:5px;">Hello World! <br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
+
+    // 인포윈도우를 생성합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        position : iwPosition, 
+        content : iwContent 
+    });
+    </script>
+</body>
+</html>
